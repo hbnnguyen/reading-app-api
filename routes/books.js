@@ -7,6 +7,17 @@ const axios = require('axios');
 const readline = require('readline');
 const { PassThrough } = require('stream');
 
+/** Router for book-related routes. */
+
+/**
+ * Makes a request to the Gutendex API.
+ *
+ * @param {string} endpoint - The API endpoint to request.
+ * @param {object} data - Optional data for the request body.
+ * @param {string} method - The HTTP method (default: "get").
+ * @returns {Promise<object>} A Promise that resolves to the response data from the API.
+ * @throws {Error} If there is an error during the API request.
+ */
 const gutendexRequest = async (endpoint, data = {}, method = "get") => {
   const url = `https://gutendex.com/${endpoint}`;
   const params = (method === "get")
@@ -22,6 +33,7 @@ const gutendexRequest = async (endpoint, data = {}, method = "get") => {
   }
 };
 
+// Retrieve a list of books from the Gutendex API.
 router.get("/", async function (req, res, next) {
   try {
     const books = await gutendexRequest("books");
@@ -32,6 +44,7 @@ router.get("/", async function (req, res, next) {
   }
 });
 
+// Retrieve book details by its ID from the Gutendex API.
 router.get("/:id", async function (req, res, next) {
   const id = req.params.id
   try {
@@ -43,6 +56,7 @@ router.get("/:id", async function (req, res, next) {
   }
 });
 
+// Retrieve the text of a book by its ID from the Gutendex API.
 router.get("/:id/text", async function (req, res, next) {
   const id = req.params.id
   try {
@@ -56,6 +70,7 @@ router.get("/:id/text", async function (req, res, next) {
   }
 });
 
+// Retrieve a page of text from a book by its ID and page number.
 router.get("/:id/text/:pageNumber", async function (req, res, next) {
   const id = req.params.id
 

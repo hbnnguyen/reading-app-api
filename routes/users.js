@@ -2,7 +2,6 @@
 
 const express = require("express");
 const router = express.Router();
-// const axios = require('axios');
 const {
   dynamoClient,
   getUsers,
@@ -11,8 +10,9 @@ const {
   deleteUser
 } = require('../dynamo');
 
+/** Router for user-related routes. */
 
-
+// Get a list of all users.
 router.get("/", async (req, res) => {
   try {
     const users = await getUsers();
@@ -23,6 +23,8 @@ router.get("/", async (req, res) => {
   }
 });
 
+
+// Get user details by their ID.
 router.get("/:id", async (req, res) => {
   const id = req.params.id;
 
@@ -35,6 +37,8 @@ router.get("/:id", async (req, res) => {
   }
 });
 
+
+// Add a new user.
 router.post("/", async (req, res) => {
   const user = req.body;
 
@@ -47,6 +51,7 @@ router.post("/", async (req, res) => {
   }
 });
 
+// Update user details by their ID.
 router.put("/:id", async (req, res) => {
   const user = req.body;
   const id = req.params.id;
@@ -61,6 +66,7 @@ router.put("/:id", async (req, res) => {
   }
 });
 
+// Delete a user by their ID.
 router.delete("/:id", async (req, res) => {
   user.id = id;
   try {
