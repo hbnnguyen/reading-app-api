@@ -23,24 +23,44 @@ const gutendexRequest = async (endpoint, data = {}, method = "get") => {
 };
 
 router.get("/", async function (req, res, next) {
-  const books = await gutendexRequest("books");
-  return res.json({ books });
+  try {
+    const books = await gutendexRequest("books");
+    return res.status(200).json({ books });
+  } catch (error) {
+    console.error("Error in /books/ route:", error);
+    res.status(500).json({ error: "An error occured while fetching books." });
+  }
 });
 
 router.get("/:id", async function (req, res, next) {
-  const book = await gutendexRequest(`books/${req.params.id}`);
-  return res.json({ book });
+  const id = req.params.id
+  try {
+    const book = await gutendexRequest(`books/${id}`);
+    return res.status(200).json({ book });
+  } catch (error) {
+    console.error(`Error in /books/:id route with id ${id}:`, error);
+    res.status(500).json({ error: "An error occured while fetching book details." });
+  }
 });
 
 router.get("/:id/text", async function (req, res, next) {
-  const book = await gutendexRequest(`books/${req.params.id}`);
-  const bookText = book.formats["text/plain; charset=us-ascii"];
-  return res.json({ bookText });
+  const id = req.params.id
+  try {
+    const book = await gutendexRequest(`books/${id}`);
+    const bookText = book.formats["text/plain; charset=us-ascii"];
+
+    return res.status(200).json({ bookText });
+  } catch (error) {
+    console.error(`Error in /books/:id/text route with id ${req.params.id}`, error);
+    res.status(500).json({ error: "An error occurred while fetching book text." });
+  }
 });
 
 router.get("/:id/text/:pageNumber", async function (req, res, next) {
+  const id = req.params.id
+
   try {
-    const book = await gutendexRequest(`books/${req.params.id}`);
+    const book = await gutendexRequest(`books/${id}`);
     const pageNumber = parseInt(req.params.pageNumber);
     const lineStart = (pageNumber - 1) * 40;
     const bookText = book.formats["text/plain; charset=us-ascii"];
@@ -76,7 +96,7 @@ router.get("/:id/text/:pageNumber", async function (req, res, next) {
       // const jsonResponse = {
       //   [page]: linesString
       // }
-      // return res.json(jsonResponse)
+      // return res.status(200).json(jsonResponse)
       res.send(linesString);
     });
   } catch (error) {

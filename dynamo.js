@@ -1,6 +1,7 @@
 "use strict"
 
 const AWS = require('aws-sdk');
+const router = require('./routes/books');
 require('dotenv').config();
 
 AWS.config.update({
@@ -78,7 +79,7 @@ const deleteUser = async (id) => {
 //     1342: 40,
 //     37106: 3
 //   }
-// })c\
+// })
 
 // (async () => {
 //   const user = await getUserById("0");
@@ -98,3 +99,4 @@ module.exports = {
   addOrUpdateUser,
   deleteUser
 };
+
