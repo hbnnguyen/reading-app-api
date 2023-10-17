@@ -42,7 +42,7 @@ router.get("/:id/text/:pageNumber", async function (req, res, next) {
   try {
     const book = await gutendexRequest(`books/${req.params.id}`);
     const pageNumber = parseInt(req.params.pageNumber);
-    const lineStart = (pageNumber - 1) * 20;
+    const lineStart = (pageNumber - 1) * 40;
     const bookText = book.formats["text/plain; charset=us-ascii"];
 
     const response = await axios.get(bookText, { responseType: 'stream' });
