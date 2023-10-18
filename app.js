@@ -4,18 +4,28 @@ const express = require('express');
 const app = express();
 const cors = require("cors");
 
+const authRoutes = require("./routes/auth")
 const bookRoutes = require("./routes/books");
 const userRoutes = require("./routes/users");
 
 // Enable JSON request body parsing
 app.use(express.json());
+require("dotenv").config();
+// cors setup for express API
+const CLIENT_URL = process.env.CLIENT_URL;
+app.use(
+  cors({
+    origin: CLIENT_URL,
+  })
+);
 
-/** Root route to test the API server. */
+// Root route to test the API server.
 app.get('/', (req, res) => {
   res.json({ "greeting": "Hello world!" });
 });
 
 // Use book and user routes
+app.use("/auth", authRoutes);
 app.use("/books", bookRoutes);
 app.use("/users", userRoutes);
 

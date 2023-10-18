@@ -2,6 +2,8 @@
 
 const AWS = require('aws-sdk');
 const router = require('./routes/books');
+const bcrypt = require("bcrypt");
+
 require('dotenv').config();
 
 AWS.config.update({
@@ -96,10 +98,27 @@ const deleteUser = async (id) => {
   }
 };
 
+async function doesUserExist(idToCheck) {
+  const params = {
+    TableName: TABLE_NAME,
+    KeyConditionExpression: 'id = :userId',
+    ExpressionAttributeValues: {
+      ':userId': idToCheck
+    }
+  };
+
+  try {
+    const data = await dynamoClient.query(params).promise();
+    return data.Items.length > 0;
+  } catch (err) {
+    console.error('Error querying DynamoDB:', err);
+    return false; // Return false on error
+  }
+}
+
 // addOrUpdateUser({
 //   id: "0",
 //   email: "email@email.com",
-//   password: "password",
 //   name: "hannah",
 //   age: 22,
 //   books: {
@@ -124,6 +143,7 @@ module.exports = {
   getUsers,
   getUserById,
   addOrUpdateUser,
-  deleteUser
+  deleteUser,
+  doesUserExist
 };
 

@@ -3,12 +3,12 @@
 const express = require("express");
 const router = express.Router();
 const {
-  dynamoClient,
   getUsers,
   getUserById,
   addOrUpdateUser,
   deleteUser
 } = require('../dynamo');
+
 
 /** Router for user-related routes. */
 
@@ -30,7 +30,7 @@ router.get("/:id", async (req, res) => {
 
   try {
     const user = await getUserById(id);
-    res.status(200).json(user);
+    res.status(200).json(user.Item);
   } catch (error) {
     console.error("Error in /users/:id route:", error);
     res.status(500).json({ error: "An error occurred while fetching user details." });
