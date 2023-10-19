@@ -16,7 +16,7 @@ const {
 router.get("/", async (req, res) => {
   try {
     const users = await getUsers();
-    res.status(200).json(users);
+    res.status(200).json(users.Items);
   } catch (error) {
     console.error("Error in /users/ route:", error);
     res.status(500).json({ error: "An error occurred while fetching users." });
@@ -41,6 +41,10 @@ router.get("/:id", async (req, res) => {
 // Add a new user.
 router.post("/", async (req, res) => {
   const user = req.body;
+  user.name = ""
+  user.age = null
+  user.books = {}
+  user.texts = {}
 
   try {
     const newUser = await addOrUpdateUser(user);

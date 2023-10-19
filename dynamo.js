@@ -27,7 +27,6 @@ const getUsers = async () => {
       TableName: TABLE_NAME
     };
     const users = await dynamoClient.scan(params).promise();
-    console.log(users);
     return users;
   } catch (error) {
     console.error("Error retrieving users: ", error);
