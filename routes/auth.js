@@ -34,7 +34,11 @@ router.post("/", async (req, res) => {
       if (await doesUserExist(userID) === false) {
         await addOrUpdateUser({
           id: userID,
-          email: email
+          email: email,
+          name: "",
+          age: null,
+          books: {},
+          texts: {}
         })
       }
 
