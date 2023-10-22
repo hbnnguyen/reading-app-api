@@ -41,10 +41,10 @@ router.get("/:id", async (req, res) => {
 // Add a new user.
 router.post("/", async (req, res) => {
   const user = req.body;
-  user.name = ""
-  user.age = null
-  user.books = {}
-  user.texts = {}
+  user.name = "";
+  user.age = null;
+  user.books = {};
+  user.texts = {};
 
   try {
     const newUser = await addOrUpdateUser(user);

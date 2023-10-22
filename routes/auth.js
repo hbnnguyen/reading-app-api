@@ -39,7 +39,7 @@ router.post("/", async (req, res) => {
           age: null,
           books: {},
           texts: {}
-        })
+        });
       }
 
       res.json({

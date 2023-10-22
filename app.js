@@ -1,10 +1,10 @@
-"use strict"
+"use strict";
 
 const express = require('express');
 const app = express();
 const cors = require("cors");
 
-const authRoutes = require("./routes/auth")
+const authRoutes = require("./routes/auth");
 const bookRoutes = require("./routes/books");
 const userRoutes = require("./routes/users");
 

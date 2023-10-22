@@ -46,7 +46,7 @@ router.get("/", async function (req, res, next) {
 
 // Retrieve book details by its ID from the Gutendex API.
 router.get("/:id", async function (req, res, next) {
-  const id = req.params.id
+  const id = req.params.id;
   try {
     const book = await gutendexRequest(`books/${id}`);
     return res.status(200).json({ book });
@@ -58,7 +58,7 @@ router.get("/:id", async function (req, res, next) {
 
 // Retrieve the text of a book by its ID from the Gutendex API.
 router.get("/:id/text", async function (req, res, next) {
-  const id = req.params.id
+  const id = req.params.id;
   try {
     const book = await gutendexRequest(`books/${id}`);
     const bookText = book.formats["text/plain; charset=us-ascii"];
@@ -72,7 +72,7 @@ router.get("/:id/text", async function (req, res, next) {
 
 // Retrieve a page of text from a book by its ID and page number.
 router.get("/:id/text/:pageNumber", async function (req, res, next) {
-  const id = req.params.id
+  const id = req.params.id;
 
   try {
     const book = await gutendexRequest(`books/${id}`);
