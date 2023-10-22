@@ -3,6 +3,8 @@
 
 this api uses the gutendex api to access books https://gutendex.com/
 
-npm i
+to install dependencies run:
+```npm i```
 
-nodemon start
+to start the server locally:
+```nodemon start```

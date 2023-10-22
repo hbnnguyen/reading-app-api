@@ -1,5 +1,6 @@
 "use strict";
 
+const serverless = require('serverless-http');
 const express = require('express');
 const app = express();
 const cors = require("cors");
@@ -9,6 +10,7 @@ const bookRoutes = require("./routes/books");
 const userRoutes = require("./routes/users");
 
 // Enable JSON request body parsing
+app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 require("dotenv").config();
 // cors setup for express API
@@ -33,6 +35,10 @@ app.use("/users", userRoutes);
 const port = process.env.PORT || 4000;
 
 // Start the Express server
-app.listen(port, () => {
-  console.log(`API server listening on port ${port}`);
-});
+
+//TODO: UNCOMMENT THE CODE BELOW TO RUN LOCALLY
+// app.listen(port, () => {
+//   console.log(`API server listening on port ${port}`);
+// });
+
+module.exports.handler = serverless(app);
