@@ -14,12 +14,32 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 require("dotenv").config();
 // cors setup for express API
-const CLIENT_URL = process.env.CLIENT_URL;
+// const CLIENT_URL = process.env.CLIENT_URL;
+const CLIENT_URL = 'http://localhost:3000';
+
 app.use(
   cors({
     origin: CLIENT_URL,
   })
 );
+
+// const allowedOrigins = ['https://pagepal.hannahnguyen.me'];
+
+// Configure CORS with the allowed origin(s)
+// const corsOptions = {
+//   origin: function (origin, callback) {
+//     if (allowedOrigins.indexOf(origin) !== -1 || !origin) {
+//       callback(null, true);
+//     } else {
+//       callback(new Error('Not allowed by CORS'));
+//     }
+//   },
+// };
+
+// // Use the configured CORS middleware
+// app.use(cors(corsOptions));
+
+// app.use(cors());
 
 // Root route to test the API server.
 app.get('/', (req, res) => {
@@ -36,9 +56,8 @@ const port = process.env.PORT || 4000;
 
 // Start the Express server
 
-//TODO: UNCOMMENT THE CODE BELOW TO RUN LOCALLY
-// app.listen(port, () => {
-//   console.log(`API server listening on port ${port}`);
-// });
+app.listen(port, () => {
+  console.log(`API server listening on port ${port}`);
+});
 
 module.exports.handler = serverless(app);

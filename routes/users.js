@@ -8,7 +8,7 @@ const {
   addOrUpdateUser,
   deleteUser
 } = require('../dynamo');
-
+const {passageAuthMiddleware} = require('../middleware/passage')
 
 /** Router for user-related routes. */
 
@@ -25,11 +25,13 @@ router.get("/", async (req, res) => {
 
 
 // Get user details by their ID.
-router.get("/:id", async (req, res) => {
-  const id = req.params.id;
+router.get("/:id", passageAuthMiddleware, async (req, res) => {
+  // const id = req.params.id;
+  let userID = res.userID
 
   try {
-    const user = await getUserById(id);
+    const user = await getUserById(userID);
+    // console.log(user)
     res.status(200).json(user.Item);
   } catch (error) {
     console.error("Error in /users/:id route:", error);
