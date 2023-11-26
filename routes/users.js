@@ -58,7 +58,7 @@ router.post("/", async (req, res) => {
 });
 
 // Update user details by their ID.
-router.put("/:id", async (req, res) => {
+router.put("/:id", passageAuthMiddleware, async (req, res) => {
   const user = req.body;
   const id = req.params.id;
   user.id = id;
